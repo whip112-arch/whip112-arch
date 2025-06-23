@@ -1,0 +1,18 @@
+import requests
+
+def bing_search(query, api_key):
+    url = "https://api.bing.microsoft.com/v7.0/search"
+    headers = {"Ocp-Apim-Subscription-Key": api_key}
+    params = {"q": query, "textDecorations": True, "textFormat": "HTML"}
+    response = requests.get(url, headers=headers, params=params)
+    return response.json()
+
+api_key = "YOUR_BING_API_KEY"
+query = "YAHWEH ancient text religious scripture"
+results = bing_search(query, api_key)
+
+for web_page in results.get("webPages", {}).get("value", []):
+    print(web_page["name"])
+    print(web_page["url"])
+    print(web_page["snippet"])
+    print("---")
